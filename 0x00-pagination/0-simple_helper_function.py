@@ -5,8 +5,10 @@ page and page_size. The function should return a tuple of size
 two containing a start index and an end index
 """
 
+from typing import Tuple
 
-def index_range(page: int, page_size: int) -> tuple[int, int]:
+
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     Return start and end indices for pagination.
 
@@ -14,6 +16,4 @@ def index_range(page: int, page_size: int) -> tuple[int, int]:
         page (int): Page number.
         page_size (int): Number of items per page.
     """
-    start_index = (page - 1) * page_size
-    end_index = start_index + page_size
-    return start_index, end_index
+    return (page * page_size - page_size, page * page_size)
