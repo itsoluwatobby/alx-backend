@@ -50,6 +50,7 @@ class LFUCache(BaseCaching):
                 while (self.history.index(key) + 1 < len(self.history) and
                         self.least[key] >=
                         self.least[self.history[self.history.index(key) + 1]]):
-                    self.history.insert(self.history.index(key) + 1,
-                                      self.history.pop(self.history.index(key)))
+                    self.history.insert(
+                            self.history.index(key) + 1,
+                            self.history.pop(self.history.index(key)))
         return self.cache_data.get(key)
