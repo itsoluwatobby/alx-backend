@@ -1,1 +1,8 @@
-{% extends '0-index.html' %}
+{% extends 'base.html' %}
+{% block head %}
+<title>{{ _('home_title') }}</title>
+{% endblock %}
+
+{% block body %}
+<h1>{{ _('home_header') }}</h1>
+{% endblock %}
