@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""
-setup a basic Flask app in 0-app.py. Create a single / route
-and an index.html
-"""
+"""module 1-app.py"""
 from flask import Flask
 from flask_babel import Babel
 from routes.route1 import app_routes
+
 
 app = Flask(__name__)
 babel = Babel(app)

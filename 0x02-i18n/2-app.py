@@ -1,25 +1,24 @@
 #!/usr/bin/env python3
-"""
-setup a basic Flask app in 0-app.py. Create a single / route
-and an index.html
-"""
-from flask import Flask
+"""module 2-app.py"""
+from flask import Flask, request
 from flask_babel import Babel
-from routes.route1 import app_routes
+from routes.route2 import app_routes
+from config import Config
+
 
 app = Flask(__name__)
 babel = Babel(app)
 
 
-class Config(object):
-    """A language config class for babel configuration"""
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
-
-
 app.config.from_object(Config)
 app.register_blueprint(app_routes)
+
+
+@babel.localeselector
+def get_locale() -> str:
+    """Determine best match for a supported languages
+    """
+    return request.accept_languages.best_match(config['LANGUAGES'])
 
 
 if __name__ == "__main__":
