@@ -9,4 +9,4 @@ app_routes = Blueprint('app_routes', __name__)
 @app_routes.route('/', methods=['GET'], strict_slashes=False)
 def home():
     """A basic endpoint that returns an home page"""
-    return render_template('1-index.html')
+    return render_template('4-index.html')
