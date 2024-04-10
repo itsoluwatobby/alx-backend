@@ -2,8 +2,9 @@
 """module 2-app.py"""
 from flask import Flask, request
 from flask_babel import Babel
-from routes.route2 import app_routes
+from routes.route3 import app_routes
 from config import Config
+from typing import Union
 
 
 app = Flask(__name__)
@@ -15,7 +16,7 @@ app.register_blueprint(app_routes)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale() -> Union[str, None]:
     """Determine best match for a supported languages
     """
     return request.accept_languages.best_match(config['LANGUAGES'])
