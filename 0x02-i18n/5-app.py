@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """module 5-app.py, Mock login"""
-from flask import Flask, request
+from flask import Flask, request, render_template, g
 from flask_babel import Babel
 from config import Config
 from typing import Union
