@@ -25,13 +25,25 @@ redisClient.on('error', (err) => {
 function reserveSeat(number) {
   redisClient.set('available_seats', number);
 }
+// when launched, initialized "available_seats" with 50
+reserveSeat(50);
 
 async function getCurrentAvailableSeats() {
   const val = await getAsyncCurrentSeats('available_seats');
-  if (val === 0) reservationEnabled = false;
+  if (val <= 0) reservationEnabled = false;
+  return val;
 }
-// when launched, initialized "available_seats" with 50
-reserveSeat(50);
+
+app.get('/available_seats', async (req, res) => {
+  const availableSeats = await getCurrentAvailableSeats();
+  res.json({numberOfAvailableSeats:availableSeats});
+});
+
+app.get('/reserve_seat', async (req, res) => {
+  const job = queue.create('reserve_seat');
+  if (!reservationEnabled) return;
+  return res.json({status:"Reservation are blocked"});
+});
 
 app.listen(PORT, () => {
   console.log(`API available on localhost port ${PORT}`);
