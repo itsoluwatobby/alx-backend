@@ -40,9 +40,19 @@ app.get('/available_seats', async (req, res) => {
 });
 
 app.get('/reserve_seat', async (req, res) => {
+  if (!reservationEnabled) return res.json({status:"Reservation are blocked"});
   const job = queue.create('reserve_seat');
-  if (!reservationEnabled) return;
-  return res.json({status:"Reservation are blocked"});
+  job.on('enqueue', () => {
+    console.log(`Seat reservation job created: ${job.id}`);
+  });
+  job.on('completed', () => {
+    console.log(`Seat reservation job ${job.id} completed`);
+  });
+  job.on('failed', (err) => {
+    console.log(`Seat reservation job ${job.id} failed: ${err}`);
+  });
+  job.save();
+  return res.json({status:'Reservation in process'});
 });
 
 app.listen(PORT, () => {
